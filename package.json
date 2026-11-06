@@ -1,0 +1,30 @@
+{
+  "name": "simple-table-preview",
+  "displayName": "Simple Table Preview",
+  "description": "%extension.description%",
+  "version": "0.2.0",
+  "icon": "icon.png",
+  "publisher": "local-table-tools",
+  "repository": { "type": "git", "url": "https://github.com/Muchmorepig/simple-table-preview.git" },
+  "homepage": "https://github.com/Muchmorepig/simple-table-preview#readme",
+  "bugs": { "url": "https://github.com/Muchmorepig/simple-table-preview/issues" },
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "main": "./src/extension.js",
+  "activationEvents": ["onCustomEditor:simpleTable.preview"],
+  "contributes": {
+    "customEditors": [{
+      "viewType": "simpleTable.preview",
+      "displayName": "%editor.displayName%",
+      "selector": [{ "filenamePattern": "*.xlsx" }, { "filenamePattern": "*.csv" }],
+      "priority": "default"
+    }]
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "package": "vsce package --allow-missing-repository"
+  },
+  "dependencies": { "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz" },
+  "devDependencies": { "@vscode/vsce": "3.2.1" },
+  "license": "MIT"
+}

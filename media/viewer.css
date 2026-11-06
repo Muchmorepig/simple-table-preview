@@ -1,0 +1,30 @@
+:root { color-scheme: light dark; }
+body { margin: 0; padding: 12px; box-sizing: border-box; height: 100vh; display: flex; flex-direction: column; color: var(--vscode-editor-foreground); background: var(--vscode-editor-background); font-family: var(--vscode-font-family, sans-serif); font-size: 13px; }
+footer, .toolbar, .pagination, .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.actions { margin-left: auto; }
+.preview-label { color: var(--vscode-descriptionForeground); font-size: 12px; }
+.toolbar select { max-width: 180px; }
+label { display: inline-flex; align-items: center; gap: 5px; }
+button, select, input { font: inherit; color: var(--vscode-input-foreground); background: var(--vscode-input-background); border: 1px solid var(--vscode-input-border, #888); border-radius: 3px; padding: 5px 8px; }
+button { cursor: pointer; }
+button:hover { background: var(--vscode-list-hoverBackground); }
+button:disabled { opacity: .45; cursor: default; }
+:focus-visible { outline: 2px solid var(--vscode-focusBorder, #007acc); outline-offset: 1px; }
+#status { margin: 10px 0; }
+#warning { color: var(--vscode-editorWarning-foreground, #ad7c00); margin: 0 0 10px; }
+#grid { flex: 1; min-height: 0; overflow: auto; border: 1px solid var(--vscode-panel-border, #888); }
+table { border-spacing: 0; table-layout: fixed; font-variant-numeric: tabular-nums; }
+thead { position: sticky; top: 0; z-index: 1; background: var(--vscode-editor-background); }
+th, td { box-sizing: border-box; border-right: 1px solid var(--vscode-panel-border, #888); border-bottom: 1px solid var(--vscode-panel-border, #888); padding: 6px 10px; text-align: left; white-space: pre; overflow: hidden; text-overflow: ellipsis; }
+th { font-weight: normal; }
+thead th { position: relative; }
+thead button { width: 100%; text-align: left; border: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+thead input { box-sizing: border-box; width: 100%; min-width: 0; }
+.column-resizer { position: absolute; top: 0; right: 0; bottom: 0; width: 8px; cursor: col-resize; touch-action: none; }
+.column-resizer:hover, .column-resizer:focus-visible { background: var(--vscode-focusBorder, #007acc); }
+.resizing, .resizing * { cursor: col-resize !important; user-select: none; }
+input[aria-invalid="true"] { border-color: var(--vscode-errorForeground, #f44); }
+tbody th { color: var(--vscode-descriptionForeground); }
+tbody tr:hover { background: var(--vscode-list-hoverBackground); }
+footer { padding-top: 10px; flex-shrink: 0; gap: 10px 24px; }
+[hidden] { display: none !important; }
