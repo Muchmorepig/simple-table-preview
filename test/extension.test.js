@@ -3,19 +3,20 @@ const assert = require('node:assert/strict');
 const Module = require('node:module');
 const path = require('node:path');
 
-test('readonly provider loads CSV through worker and rejects oversized files', async () => {
+for (const format of ['csv', 'tsv']) test(`readonly provider loads ${format.toUpperCase()} through worker and rejects oversized files`, async () => {
   let provider, receive, dispose;
   let size = 20;
   const messages = [];
   const fake = {
     env: { language: 'zh-cn' },
     Uri: { joinPath: (...parts) => parts.join('/') },
-    workspace: { fs: { stat: async () => ({ size }), readFile: async () => Buffer.from('gene,p\ng1,1e-100') } },
+    workspace: { fs: { stat: async () => ({ size }), readFile: async () => Buffer.from(format === 'csv' ? 'gene,p\ng1,1e-100' : 'gene\tp\ng1,description\t1e-100') } },
     window: { registerCustomEditorProvider: (id, value) => { provider = value; return { dispose() {} }; } }
   };
   const original = Module._load;
   Module._load = function (id, ...args) { return id === 'vscode' ? fake : original.call(this, id, ...args); };
   try {
+    delete require.cache[require.resolve('../src/extension')];
     require('../src/extension').activate({ subscriptions: [], extensionUri: path.resolve(__dirname, '..') });
   } finally { Module._load = original; }
   const panel = {
@@ -26,7 +27,7 @@ test('readonly provider loads CSV through worker and rejects oversized files', a
     },
     onDidDispose: fn => { dispose = fn; }
   };
-  const document = provider.openCustomDocument({ path: '/sample.csv' });
+  const document = provider.openCustomDocument({ path: `/sample.${format}` });
   provider.resolveCustomEditor(document, panel);
   assert.match(panel.webview.html, /default-src 'none'/);
   const footer = panel.webview.html.split('<footer>')[1].split('</footer>')[0];
@@ -39,7 +40,8 @@ test('readonly provider loads CSV through worker and rejects oversized files', a
     await receive({ type: 'load', encoding: 'utf-8' });
     const deadline = Date.now() + 5000;
     while (messages.length === 0 && Date.now() < deadline) await new Promise(resolve => setTimeout(resolve, 20));
-    assert.deepEqual(messages[0].data.sheets[0].rows, [['gene', 'p'], ['g1', '1e-100']]);
+    assert.deepEqual(messages[0].data.sheets[0].rows, [['gene', 'p'], [format === 'csv' ? 'g1' : 'g1,description', '1e-100']]);
+    assert.equal(messages[0].data.csv, true);
     size = 21 * 1024 * 1024;
     await receive({ type: 'load', encoding: 'utf-8' });
     assert.match(messages[1].error, /20 MiB/);

@@ -1,4 +1,4 @@
 {
-  "extension.description": "只读 XLSX、CSV 预览，支持排序、正则和数值筛选、列宽调整。",
+  "extension.description": "只读 XLSX、CSV、TSV 预览，支持排序、正则和数值筛选、列宽调整。",
   "editor.displayName": "表格预览"
 }

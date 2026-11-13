@@ -3,9 +3,9 @@ const MAX_ROWS = 50000;
 const MAX_COLUMNS = 200;
 const MAX_CELLS = 200000;
 
-function parse(bytes, csv, encoding = 'utf-8') {
+function parse(bytes, csv, encoding = 'utf-8', separator) {
   const input = csv ? new TextDecoder(encoding, { fatal: true }).decode(bytes) : bytes;
-  const workbook = XLSX.read(input, { type: csv ? 'string' : 'buffer', raw: csv, sheetRows: MAX_ROWS, cellFormula: false, cellHTML: false });
+  const workbook = XLSX.read(input, { type: csv ? 'string' : 'buffer', raw: csv, FS: separator, sheetRows: MAX_ROWS, cellFormula: false, cellHTML: false });
   let remaining = MAX_CELLS;
   const sheets = workbook.SheetNames.map(name => {
     const sheet = workbook.Sheets[name];

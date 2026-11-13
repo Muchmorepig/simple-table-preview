@@ -1,4 +1,4 @@
 {
-  "extension.description": "唯讀 XLSX、CSV 預覽，支援排序、正則和數值篩選、欄寬調整（預覽介面使用簡體中文）。",
+  "extension.description": "唯讀 XLSX、CSV、TSV 預覽，支援排序、正則和數值篩選、欄寬調整（預覽介面使用簡體中文）。",
   "editor.displayName": "表格預覽"
 }

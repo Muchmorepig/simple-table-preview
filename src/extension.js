@@ -34,7 +34,7 @@ function activate(context) {
           if (disposed || request !== version) return;
           if (bytes.length > 20 * 1024 * 1024) throw new Error(t('The file exceeds the 20 MiB preview limit. Please split it first.'));
           worker = new Worker(path.join(__dirname, 'worker.js'), {
-            workerData: { bytes, csv: /\.csv$/i.test(document.uri.path), encoding: message.encoding, language },
+            workerData: { bytes, csv: /\.(csv|tsv)$/i.test(document.uri.path), separator: /\.tsv$/i.test(document.uri.path) ? '\t' : undefined, encoding: message.encoding, language },
             resourceLimits: { maxOldGenerationSizeMb: 256 }
           });
           let answered = false;
@@ -49,7 +49,7 @@ function activate(context) {
       <p id="status" role="status" aria-live="polite">${t('Loading…')}</p><p id="warning" role="alert" hidden></p>
       <main id="grid" tabindex="0" aria-label="${t('Data table')}"><table id="table"><colgroup id="columns"></colgroup><thead id="head"></thead><tbody id="body"></tbody></table></main>
       <footer>
-      <div class="toolbar" role="group" aria-label="${t('Table settings')}"><label>${t('Worksheet')} <select id="sheet"></select></label><label><input type="checkbox" id="header">${t('First row as header')}</label><label id="encodingLabel">${t('CSV encoding')} <select id="encoding"><option value="utf-8">UTF-8</option><option value="gb18030">GB18030 / GBK</option><option value="utf-16le">UTF-16 LE</option></select></label></div>
+      <div class="toolbar" role="group" aria-label="${t('Table settings')}"><label>${t('Worksheet')} <select id="sheet"></select></label><label><input type="checkbox" id="header">${t('First row as header')}</label><label id="encodingLabel">${t('CSV/TSV encoding')} <select id="encoding"><option value="utf-8">UTF-8</option><option value="gb18030">GB18030 / GBK</option><option value="utf-16le">UTF-16 LE</option></select></label></div>
       <nav class="pagination" aria-label="${t('Pagination')}"><button id="previous">${t('Previous')}</button><span id="page"></span><button id="next">${t('Next')}</button><span>${t('200 rows per page')}</span></nav>
       <div class="actions" role="group" aria-label="${t('Table actions')}"><button id="reset">${t('Reset sort and filters')}</button><button id="reload">${t('Reload file')}</button><span class="preview-label">${t('Table Preview · Read-only')}</span></div>
       </footer>

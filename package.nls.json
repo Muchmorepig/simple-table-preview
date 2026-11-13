@@ -1,4 +1,4 @@
 {
-  "extension.description": "Read-only XLSX and CSV preview with sorting, regex and numeric filters, and resizable columns.",
+  "extension.description": "Read-only XLSX, CSV and TSV preview with sorting, regex and numeric filters, and resizable columns.",
   "editor.displayName": "Table Preview"
 }

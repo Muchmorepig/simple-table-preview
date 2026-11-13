@@ -6,7 +6,7 @@
     'Table settings': '表格设置',
     'Worksheet': '工作表',
     'First row as header': '首行作为表头',
-    'CSV encoding': 'CSV 编码',
+    'CSV/TSV encoding': 'CSV/TSV 编码',
     'Pagination': '翻页',
     'Previous': '上一页',
     'Next': '下一页',
@@ -36,7 +36,7 @@
     'Preview failed: {error}': '预览失败：{error}',
     'The parser stopped. The file may be too large.': '解析进程已停止，文件可能过大。',
     'Parsing exceeded 15 seconds. Please use a smaller file.': '解析超过 15 秒，请先缩小文件。',
-    'Cannot read the file: {error}. For CSV, try a different encoding. For XLSX, check that the file is not encrypted or damaged.': '无法读取文件：{error}。CSV 请尝试切换编码；XLSX 请确认文件未加密且未损坏。'
+    'Cannot read the file: {error}. For CSV/TSV, try a different encoding. For XLSX, check that the file is not encrypted or damaged.': '无法读取文件：{error}。CSV/TSV 请尝试切换编码；XLSX 请确认文件未加密且未损坏。'
   };
   function createTranslator(language = 'en') {
     const chinese = /^zh(?:-|$)/i.test(language);

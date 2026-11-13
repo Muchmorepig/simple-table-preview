@@ -55,6 +55,17 @@ test('XLSX sheets, numeric values, cached formulas and empty sheets', () => {
   assert.equal(result.sheets[0].rows[1][2], 2);
   assert.deepEqual(result.sheets[1].rows, []);
 });
+test('TSV uses tabs, preserves quoted tabs/newlines, empty cells and numeric text', () => {
+  const text = '\ufeffgene\tp\tnote\tempty\r\n001\t1e-100\t"中文,分号;\t换行\n内容"\t\r\ng2\t0.1\t"a ""quote"""\t\r\n';
+  const result = parse(Buffer.from(text), true, 'utf-8', '\t');
+  const rows = result.sheets[0].rows;
+  assert.equal(result.csv, true);
+  assert.deepEqual(rows, [['gene', 'p', 'note', 'empty'], ['001', '1e-100', '中文,分号;\t换行\n内容', ''], ['g2', '0.1', 'a "quote"', '']]);
+  assert.deepEqual(selectRows(rows, true, ['', '<0.05'], { column: 1, direction: 1 }), [1]);
+  assert.deepEqual(parse(Buffer.from('name,description\na,b;c'), true, 'utf-8', '\t').sheets[0].rows, [['name,description'], ['a,b;c']]);
+  assert.deepEqual(parse(Buffer.from('列\t值\n甲\t001', 'utf16le'), true, 'utf-16le', '\t').sheets[0].rows, [['列', '值'], ['甲', '001']]);
+  assert.deepEqual(parse(Buffer.from([0xc1, 0xd0, 9, 0xd6, 0xb5, 10, 0xbc, 0xd7, 9, 49]), true, 'gb18030', '\t').sheets[0].rows, [['列', '值'], ['甲', '1']]);
+});
 test('preview limits are explicit', () => {
   const result = parse(Buffer.from('a,b,c,d,e\n'.repeat(41000)), true);
   assert.equal(result.sheets[0].rows.length, 40000);

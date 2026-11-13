@@ -2,7 +2,7 @@
   "name": "simple-table-preview",
   "displayName": "Simple Table Preview",
   "description": "%extension.description%",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "icon": "icon.png",
   "publisher": "local-table-tools",
   "repository": { "type": "git", "url": "https://github.com/Muchmorepig/simple-table-preview.git" },
@@ -16,7 +16,7 @@
     "customEditors": [{
       "viewType": "simpleTable.preview",
       "displayName": "%editor.displayName%",
-      "selector": [{ "filenamePattern": "*.xlsx" }, { "filenamePattern": "*.csv" }],
+      "selector": [{ "filenamePattern": "*.xlsx" }, { "filenamePattern": "*.csv" }, { "filenamePattern": "*.tsv" }],
       "priority": "default"
     }]
   },
